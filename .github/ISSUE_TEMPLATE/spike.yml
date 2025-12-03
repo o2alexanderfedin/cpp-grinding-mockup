@@ -1,0 +1,154 @@
+name: Spike (Research/Investigation)
+description: Create a time-boxed research or investigation task
+title: "Spike: "
+labels: ["spike"]
+projects: ["o2alexanderfedin/13"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Spike Template
+        A spike is a time-boxed research or investigation task to gather information for decision-making.
+
+  - type: input
+    id: parent
+    attributes:
+      label: Related To
+      description: Which epic or story is this spike supporting?
+      placeholder: "#123"
+    validations:
+      required: false
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Research Question
+      description: What question are you trying to answer?
+      placeholder: "Which database migration tool should we use for production deployments?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Why is this research needed?
+      placeholder: |
+        We need to choose a migration tool that:
+        - Supports zero-downtime migrations
+        - Has rollback capability
+        - Integrates with our CI/CD
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Research Scope
+      description: What will you investigate?
+      placeholder: |
+        - Evaluate 3-5 migration tools
+        - Test with sample migrations
+        - Compare features, performance, ease of use
+        - Check community support and documentation
+    validations:
+      required: true
+
+  - type: input
+    id: timebox
+    attributes:
+      label: Time Box
+      description: Maximum time to spend on this research
+      placeholder: "8 hours (1 day)"
+    validations:
+      required: true
+
+  - type: textarea
+    id: success-criteria
+    attributes:
+      label: Success Criteria
+      description: What deliverables or outcomes are expected?
+      placeholder: |
+        - [ ] Comparison matrix of 3 tools
+        - [ ] Recommendation with rationale
+        - [ ] Proof of concept with chosen tool
+        - [ ] Documentation of findings
+        - [ ] Action items for implementation
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How urgent is this research?
+      options:
+        - Critical (Blocking other work)
+        - High (Needed for upcoming sprint)
+        - Medium (Nice to have soon)
+        - Low (Future planning)
+      default: 2
+    validations:
+      required: true
+
+  - type: input
+    id: sprint
+    attributes:
+      label: Sprint
+      description: When should this be completed?
+      placeholder: "Sprint-2025-48"
+    validations:
+      required: false
+
+  - type: textarea
+    id: options
+    attributes:
+      label: Options to Evaluate
+      description: What specific tools/approaches will you investigate?
+      placeholder: |
+        1. Flyway
+        2. Liquibase
+        3. Knex migrations
+        4. TypeORM migrations
+        5. Custom solution
+    validations:
+      required: false
+
+  - type: textarea
+    id: evaluation-criteria
+    attributes:
+      label: Evaluation Criteria
+      description: How will you compare the options?
+      placeholder: |
+        - Zero-downtime support
+        - Rollback capability
+        - Performance
+        - Learning curve
+        - Community/support
+        - Cost
+        - CI/CD integration
+    validations:
+      required: false
+
+  - type: textarea
+    id: resources
+    attributes:
+      label: Resources
+      description: Links to docs, articles, examples
+      placeholder: |
+        - https://example.com/tool-comparison
+        - https://docs.example.com
+    validations:
+      required: false
+
+  - type: textarea
+    id: risks
+    attributes:
+      label: Known Risks/Constraints
+      description: What limitations or concerns exist?
+      placeholder: |
+        - Must work with PostgreSQL 14+
+        - Cannot require downtime
+        - Budget limit: $X/month for SaaS tools
+    validations:
+      required: false

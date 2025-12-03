@@ -1,0 +1,163 @@
+name: Bug Report
+description: Report a bug or defect
+title: "Bug: "
+labels: ["bug"]
+projects: ["o2alexanderfedin/13"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Bug Report Template
+        Please provide as much detail as possible to help us reproduce and fix the issue.
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How severe is this bug?
+      options:
+        - Critical (Production down, data loss, security)
+        - High (Major functionality broken)
+        - Medium (Feature impaired but workaround exists)
+        - Low (Minor issue, cosmetic)
+      default: 2
+    validations:
+      required: true
+
+  - type: dropdown
+    id: effort
+    attributes:
+      label: Estimated Effort
+      description: How complex is the fix? (can be updated later)
+      options:
+        - Unknown
+        - XS (< 2 hours)
+        - S (2-4 hours)
+        - M (4-8 hours)
+        - L (1-2 days)
+        - XL (2+ days)
+      default: 0
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: Clear and concise description of the bug
+      placeholder: "The login button doesn't respond when clicked on mobile devices"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What should happen?
+      placeholder: "Login button should trigger authentication flow"
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happens?
+      placeholder: "Nothing happens when button is clicked. No errors in console."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this bug?
+      placeholder: |
+        1. Open app on mobile device (iOS Safari)
+        2. Navigate to /login
+        3. Tap the 'Login' button
+        4. Observe no response
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Where does this occur?
+      placeholder: |
+        - OS: iOS 17.2
+        - Browser: Safari Mobile
+        - App Version: 1.2.3
+        - Environment: Production
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error Logs
+      description: Include any relevant error messages or logs
+      placeholder: |
+        ```
+        [Error logs here]
+        ```
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots/Videos
+      description: Add screenshots or videos if applicable
+      placeholder: "Drag and drop images here or paste image URLs"
+    validations:
+      required: false
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: User Impact
+      description: How many users are affected? What is the business impact?
+      placeholder: |
+        - Affects all mobile users (approx. 40% of user base)
+        - Users cannot login on mobile
+        - Workaround: use desktop browser
+    validations:
+      required: false
+
+  - type: textarea
+    id: root-cause
+    attributes:
+      label: Suspected Root Cause
+      description: If known, what might be causing this?
+      placeholder: "Possibly a CSS z-index issue with overlay elements"
+    validations:
+      required: false
+
+  - type: textarea
+    id: suggested-fix
+    attributes:
+      label: Suggested Fix
+      description: If you have ideas on how to fix this
+      placeholder: "Check if overlay is blocking button clicks"
+    validations:
+      required: false
+
+  - type: input
+    id: sprint
+    attributes:
+      label: Sprint
+      description: Should this be fixed in current sprint?
+      placeholder: "Sprint-2025-48"
+    validations:
+      required: false
+
+  - type: textarea
+    id: related
+    attributes:
+      label: Related Issues
+      description: Link to related bugs or issues
+      placeholder: "Related to #123, duplicate of #456"
+    validations:
+      required: false
