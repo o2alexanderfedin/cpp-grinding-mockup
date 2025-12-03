@@ -1,17 +1,45 @@
 import { type FC } from 'react'
-import { Box, Typography, Container } from '@mui/material'
+import { Container, Typography, Box } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '../app/hooks'
+import {
+  selectFilteredRepositories,
+  selectSelectedRepositoryId,
+  selectSearchQuery,
+  selectRepository,
+  setSearchQuery,
+} from '../features/repositories/repositoriesSlice'
+import { RepositoryGrid } from '../components/RepositoryGrid'
+import { SearchBar } from '../components/SearchBar'
 
 export const RepositoryDashboard: FC = () => {
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+
+  const repositories = useAppSelector(selectFilteredRepositories)
+  const selectedRepositoryId = useAppSelector(selectSelectedRepositoryId)
+  const searchQuery = useAppSelector(selectSearchQuery)
+
+  const handleSelectRepository = (repositoryId: string) => {
+    dispatch(selectRepository(repositoryId))
+    navigate(`/repo/${repositoryId}`)
+  }
+
   return (
-    <Container>
-      <Box sx={{ py: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Repository Dashboard
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
-          Repository Selection - To be implemented in Epic 3
-        </Typography>
+    <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Typography variant="h4" sx={{ mb: 4 }}>
+        Your Repositories
+      </Typography>
+
+      <Box sx={{ mb: 3 }}>
+        <SearchBar value={searchQuery} onChange={query => dispatch(setSearchQuery(query))} />
       </Box>
+
+      <RepositoryGrid
+        repositories={repositories}
+        selectedRepositoryId={selectedRepositoryId}
+        onSelectRepository={handleSelectRepository}
+      />
     </Container>
   )
 }

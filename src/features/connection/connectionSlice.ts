@@ -39,6 +39,7 @@ export const { disconnect } = connectionSlice.actions
 
 // Selectors
 export const selectConnectionStatus = (state: RootState) => state.connection.status
+export const selectIsConnected = (state: RootState) => state.connection.status === 'connected'
 
 // Reducer
 export default connectionSlice.reducer
