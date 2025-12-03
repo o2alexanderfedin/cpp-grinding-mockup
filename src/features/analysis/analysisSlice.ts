@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk, createSelector, type PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '@app/store'
-import type { Issue, IssueSeverity } from '../../types/issue'
+import type { Issue, IssueSeverity, IssueStatus } from '../../types/issue'
 import { issueMap } from '../../data/mockIssues'
 
 type AnalysisStatus = 'idle' | 'analyzing' | 'complete' | 'error'
 type SortBy = 'severity' | 'line' | 'category'
 
-interface AnalysisState {
+export interface AnalysisState {
   status: AnalysisStatus
   progress: number // 0-100
   currentStage: string
@@ -17,6 +17,7 @@ interface AnalysisState {
   sortBy: SortBy
   searchQuery: string
   drawerOpen: boolean
+  issueStatusMap: Record<string, IssueStatus>
 }
 
 // Initial State
@@ -31,6 +32,7 @@ const initialState: AnalysisState = {
   sortBy: 'severity',
   searchQuery: '',
   drawerOpen: false,
+  issueStatusMap: {},
 }
 
 // Async Thunks
@@ -103,6 +105,17 @@ const analysisSlice = createSlice({
     toggleDrawer: state => {
       state.drawerOpen = !state.drawerOpen
     },
+    updateIssueStatus: (
+      state,
+      action: PayloadAction<{
+        issueId: string
+        status: IssueStatus
+        acknowledgedBy?: string
+      }>
+    ) => {
+      const { issueId, status } = action.payload
+      state.issueStatusMap[issueId] = status
+    },
   },
   extraReducers: builder => {
     builder
@@ -140,6 +153,7 @@ export const {
   openDrawer,
   closeDrawer,
   toggleDrawer,
+  updateIssueStatus,
 } = analysisSlice.actions
 
 // Selectors
@@ -211,6 +225,11 @@ export const selectFilteredIssues = createSelector(
     })
   }
 )
+
+// Select issue status from status map
+export const selectIssueStatus = (issueId: string) => (state: RootState) => {
+  return state.analysis.issueStatusMap[issueId]
+}
 
 // Reducer
 export default analysisSlice.reducer

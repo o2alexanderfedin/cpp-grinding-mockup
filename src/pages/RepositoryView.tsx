@@ -18,7 +18,9 @@ import {
   selectFile,
   selectIssue,
   runAnalysis,
+  updateIssueStatus,
 } from '../features/analysis/analysisSlice'
+import type { IssueStatus } from '../types/issue'
 import { FileTree } from '../components/FileTree'
 import { IssueList } from '../components/IssueList'
 import { IssueDetail } from '../components/IssueDetail'
@@ -48,6 +50,18 @@ export const RepositoryView: FC = () => {
   const handleAnalyze = () => {
     if (repoId) {
       dispatch(runAnalysis(repoId))
+    }
+  }
+
+  const handleStatusChange = (status: IssueStatus) => {
+    if (selectedIssueId) {
+      dispatch(
+        updateIssueStatus({
+          issueId: selectedIssueId,
+          status,
+          acknowledgedBy: 'demo-user',
+        })
+      )
     }
   }
 
@@ -158,7 +172,12 @@ export const RepositoryView: FC = () => {
             </Typography>
 
             {selectedIssue ? (
-              <IssueDetail issue={selectedIssue} />
+              <IssueDetail
+                issue={selectedIssue}
+                allIssues={filteredIssues}
+                onSelectIssue={id => dispatch(selectIssue(id))}
+                onStatusChange={handleStatusChange}
+              />
             ) : (
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80%' }}>
                 <Typography color="text.secondary">Select an issue to view details</Typography>
