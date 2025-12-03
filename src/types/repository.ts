@@ -1,9 +1,15 @@
 export interface FileNode {
+  id: string
   name: string
-  type: 'file' | 'folder'
+  type: 'file' | 'directory'
   path: string
+  extension?: string
   children?: FileNode[]
-  issueCount?: number
+  issueCount: number
+  criticalIssues: number
+  highIssues: number
+  mediumIssues: number
+  lowIssues: number
 }
 
 export interface Repository {
