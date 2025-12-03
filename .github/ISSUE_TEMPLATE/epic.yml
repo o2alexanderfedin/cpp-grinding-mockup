@@ -1,0 +1,104 @@
+name: Epic
+description: Create a new epic for a large feature or initiative
+title: "[EPIC] "
+labels: ["epic"]
+projects: ["o2alexanderfedin/13"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Epic Template
+        An epic is a large body of work that can be broken down into smaller user stories and tasks.
+
+  - type: input
+    id: epic-title
+    attributes:
+      label: Epic Title
+      description: Brief description of the epic (already in title, but ensure it's clear)
+      placeholder: "e.g., User Authentication System"
+    validations:
+      required: true
+
+  - type: textarea
+    id: goal
+    attributes:
+      label: Epic Goal
+      description: What is the high-level goal of this epic?
+      placeholder: "Enable users to securely authenticate and access their accounts"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Detailed description of the epic scope
+      placeholder: |
+        - What features are included?
+        - What problem does this solve?
+        - What is the business value?
+    validations:
+      required: true
+
+  - type: textarea
+    id: user-stories
+    attributes:
+      label: User Stories
+      description: List potential user stories that belong to this epic
+      placeholder: |
+        - As a user, I can register with email
+        - As a user, I can login with OAuth
+        - As a user, I can reset my password
+    validations:
+      required: false
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: How will we know this epic is complete?
+      placeholder: |
+        - [ ] All authentication methods implemented
+        - [ ] Security audit passed
+        - [ ] Documentation completed
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this epic?
+      options:
+        - Critical
+        - High
+        - Medium
+        - Low
+    validations:
+      required: true
+
+  - type: input
+    id: target-sprint
+    attributes:
+      label: Target Completion Sprint
+      description: Which sprint should this be completed by?
+      placeholder: "Sprint-2025-12"
+    validations:
+      required: false
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: What other epics or external factors does this depend on?
+      placeholder: "Depends on #123, requires API keys from vendor"
+    validations:
+      required: false
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional Notes
+      description: Any other relevant information
+    validations:
+      required: false

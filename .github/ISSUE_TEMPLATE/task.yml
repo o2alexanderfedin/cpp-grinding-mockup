@@ -1,0 +1,136 @@
+name: Task
+description: Create a technical task or subtask
+title: "Task: "
+labels: ["task"]
+projects: ["o2alexanderfedin/13"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Task Template
+        Tasks are specific implementation work items, often part of a user story.
+
+  - type: input
+    id: parent
+    attributes:
+      label: Parent Issue
+      description: Which user story or epic is this task part of?
+      placeholder: "#123"
+    validations:
+      required: false
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Task Description
+      description: What needs to be done?
+      placeholder: "Implement OAuth2 callback handler for GitHub authentication"
+    validations:
+      required: true
+
+  - type: textarea
+    id: implementation-details
+    attributes:
+      label: Implementation Details
+      description: Technical approach and specific requirements
+      placeholder: |
+        - Create route `/auth/github/callback`
+        - Extract code from query params
+        - Exchange code for access token
+        - Fetch user profile
+        - Create or update user in database
+        - Generate JWT token
+        - Return token to client
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: How will we verify this is complete?
+      placeholder: |
+        - [ ] Callback route handles successful auth
+        - [ ] Callback route handles errors gracefully
+        - [ ] User data properly stored
+        - [ ] JWT token generated correctly
+        - [ ] Unit tests written and passing
+        - [ ] Integration test covers happy path
+        - [ ] Code reviewed
+    validations:
+      required: true
+
+  - type: dropdown
+    id: effort
+    attributes:
+      label: Effort Estimate
+      description: How long will this take?
+      options:
+        - XS (< 2 hours)
+        - S (2-4 hours)
+        - M (4-8 hours)
+        - L (1-2 days)
+        - XL (2+ days - consider breaking down)
+      default: 1
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How urgent is this task?
+      options:
+        - Critical
+        - High
+        - Medium
+        - Low
+      default: 2
+    validations:
+      required: true
+
+  - type: input
+    id: sprint
+    attributes:
+      label: Sprint
+      description: Which sprint is this planned for?
+      placeholder: "Sprint-2025-48"
+    validations:
+      required: false
+
+  - type: textarea
+    id: technical-notes
+    attributes:
+      label: Technical Notes
+      description: Architecture decisions, libraries to use, etc.
+      placeholder: |
+        - Use passport-github2 library
+        - Store tokens encrypted in database
+        - Implement rate limiting
+    validations:
+      required: false
+
+  - type: textarea
+    id: testing-approach
+    attributes:
+      label: Testing Approach
+      description: How should this be tested?
+      placeholder: |
+        Unit tests:
+        - Mock GitHub API responses
+        - Test successful auth flow
+        - Test error cases
+
+        Integration tests:
+        - Test full OAuth flow in test environment
+    validations:
+      required: false
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: What must be completed first?
+      placeholder: "Depends on #456 (OAuth setup), requires GitHub OAuth app credentials"
+    validations:
+      required: false

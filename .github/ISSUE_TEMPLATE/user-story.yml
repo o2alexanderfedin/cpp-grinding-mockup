@@ -1,0 +1,127 @@
+name: User Story
+description: Create a user story for a feature from the user's perspective
+title: "As a [user type], I can [capability]"
+labels: ["user-story"]
+projects: ["o2alexanderfedin/13"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## User Story Template
+        Format: "As a [type of user], I can [action], so that [benefit]"
+
+  - type: input
+    id: epic
+    attributes:
+      label: Parent Epic
+      description: Which epic does this story belong to?
+      placeholder: "#123"
+    validations:
+      required: false
+
+  - type: textarea
+    id: story
+    attributes:
+      label: User Story
+      description: Complete user story in standard format
+      placeholder: "As a registered user, I can reset my password via email so that I can regain access to my account if I forget my password"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Additional context and details
+      placeholder: |
+        - What is the current behavior?
+        - What is the desired behavior?
+        - Why is this needed?
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Specific conditions that must be met for this story to be complete
+      placeholder: |
+        - [ ] User can request password reset from login page
+        - [ ] User receives reset email within 5 minutes
+        - [ ] Reset link expires after 24 hours
+        - [ ] User can set new password and login immediately
+        - [ ] All tests pass
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this story?
+      options:
+        - Critical
+        - High
+        - Medium
+        - Low
+      default: 2
+    validations:
+      required: true
+
+  - type: dropdown
+    id: effort
+    attributes:
+      label: Effort Estimate
+      description: How much work is this story?
+      options:
+        - XS (< 2 hours)
+        - S (2-4 hours)
+        - M (4-8 hours)
+        - L (1-2 days)
+        - XL (2+ days - consider breaking down)
+    validations:
+      required: true
+
+  - type: input
+    id: sprint
+    attributes:
+      label: Sprint
+      description: Which sprint is this planned for?
+      placeholder: "Sprint-2025-48"
+    validations:
+      required: false
+
+  - type: textarea
+    id: tasks
+    attributes:
+      label: Implementation Tasks
+      description: Break down into specific technical tasks
+      placeholder: |
+        - [ ] Create password reset API endpoint
+        - [ ] Implement email sending service
+        - [ ] Create reset password UI
+        - [ ] Write unit tests
+        - [ ] Write integration tests
+    validations:
+      required: false
+
+  - type: textarea
+    id: technical-notes
+    attributes:
+      label: Technical Notes
+      description: Implementation details, API endpoints, dependencies, etc.
+      placeholder: |
+        - Uses nodemailer for email
+        - Token stored in Redis with 24h TTL
+        - Rate limited to 3 attempts per hour
+    validations:
+      required: false
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: What must be completed before this can start?
+      placeholder: "Depends on #456, blocked by external API availability"
+    validations:
+      required: false

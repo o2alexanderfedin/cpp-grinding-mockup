@@ -1,0 +1,52 @@
+name: Project Automation
+
+on:
+  issues:
+    types: [opened, closed, reopened]
+  pull_request:
+    types: [opened, closed, ready_for_review]
+
+permissions:
+  issues: write
+  pull-requests: write
+  repository-projects: write
+
+jobs:
+  auto-add-to-project:
+    name: Auto-add to Project
+    runs-on: ubuntu-latest
+    if: github.event.action == 'opened'
+    steps:
+      - name: Add issue to project
+        uses: actions/add-to-project@v0.5.0
+        with:
+          project-url: https://github.com/users/o2alexanderfedin/projects/13
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  update-status-on-pr:
+    name: Update Status on PR
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Move to In Review when PR opened
+        if: github.event.action == 'opened' || github.event.action == 'ready_for_review'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue_number = context.payload.pull_request.number;
+            // This is a simplified example - actual implementation would use GraphQL
+            // to update the project item status
+            console.log(`PR #${issue_number} should be moved to In Review`);
+
+  archive-on-close:
+    name: Archive Completed Items
+    runs-on: ubuntu-latest
+    if: github.event.action == 'closed'
+    steps:
+      - name: Mark as Done when closed
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue_number = context.payload.issue?.number || context.payload.pull_request?.number;
+            console.log(`Issue/PR #${issue_number} should be marked as Done`);
+            // Actual implementation would update project status to "Done"
