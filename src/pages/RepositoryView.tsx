@@ -24,6 +24,7 @@ import { IssueList } from '../components/IssueList'
 import { IssueDetail } from '../components/IssueDetail'
 import { IssueFilters } from '../components/IssueFilters'
 import { AnalysisProgress } from '../components/AnalysisProgress'
+import { ExportMenu } from '../components/ExportMenu'
 
 export const RepositoryView: FC = () => {
   const { repoId } = useParams<{ repoId: string }>()
@@ -119,9 +120,10 @@ export const RepositoryView: FC = () => {
         {/* Issue List Column */}
         <Grid item xs={12} md={4}>
           <Paper sx={{ p: 2, height: '70vh', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-            <Typography variant="h6" sx={{ mb: 2 }}>
-              Issues
-            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+              <Typography variant="h6">Issues</Typography>
+              <ExportMenu issues={filteredIssues} repositoryName={repository.name} />
+            </Box>
 
             {analysisStatus === 'complete' && selectedFilePath && (
               <>
