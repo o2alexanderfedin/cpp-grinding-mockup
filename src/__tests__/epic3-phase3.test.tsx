@@ -91,7 +91,8 @@ describe('Epic 3 Phase 3: Repository Selection & Navigation', () => {
       fireEvent.click(card!)
 
       // Verify navigation occurred
-      expect(screen.getByText(/File tree and analysis coming soon/)).toBeInTheDocument()
+      expect(screen.getByText('File Tree')).toBeInTheDocument()
+      expect(screen.getByText('Issues')).toBeInTheDocument()
     })
   })
 
@@ -108,10 +109,11 @@ describe('Epic 3 Phase 3: Repository Selection & Navigation', () => {
       expect(screen.getByText('Repository not found')).toBeInTheDocument()
     })
 
-    it('should display placeholder text for file tree', () => {
+    it('should display file tree section', () => {
       renderWithMemoryRouter('/repo/repo-1')
 
-      expect(screen.getByText(/File tree and analysis coming soon/)).toBeInTheDocument()
+      expect(screen.getByText('File Tree')).toBeInTheDocument()
+      expect(screen.getByText('Issues')).toBeInTheDocument()
     })
   })
 
