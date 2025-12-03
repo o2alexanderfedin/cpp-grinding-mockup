@@ -3,6 +3,7 @@ import { Box, Paper, Typography, Chip, Button, IconButton, Snackbar } from '@mui
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { formatDistanceToNow } from 'date-fns'
 import type { Issue } from '../types/issue'
 import { copyToClipboard, formatIssueForClipboard } from '../utils/clipboard'
 
@@ -72,6 +73,13 @@ export function IssueDetail({ issue }: IssueDetailProps) {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
             <Chip label={issue.severity} color={getSeverityColor(issue.severity)} />
             <Chip label={issue.category} variant="outlined" />
+            {issue.status && (
+              <Chip
+                label={`Status: ${issue.status}`}
+                color={issue.status === 'new' ? 'error' : issue.status === 'fixed' ? 'success' : 'default'}
+                size="small"
+              />
+            )}
           </Box>
           <IconButton size="small" onClick={handleCopyIssue} title="Copy entire issue">
             <ContentCopyIcon fontSize="small" />
@@ -83,6 +91,25 @@ export function IssueDetail({ issue }: IssueDetailProps) {
         <Typography variant="body2" color="text.secondary">
           {issue.file} • Line {issue.line}
         </Typography>
+        {/* Metadata Timestamps */}
+        {(issue.discoveredAt || issue.lastUpdated) && (
+          <Box sx={{ display: 'flex', gap: 1, mt: 1, flexWrap: 'wrap' }}>
+            {issue.discoveredAt && (
+              <Chip
+                label={`Discovered ${formatDistanceToNow(new Date(issue.discoveredAt))} ago`}
+                variant="outlined"
+                size="small"
+              />
+            )}
+            {issue.lastUpdated && (
+              <Chip
+                label={`Updated ${formatDistanceToNow(new Date(issue.lastUpdated))} ago`}
+                variant="outlined"
+                size="small"
+              />
+            )}
+          </Box>
+        )}
       </Box>
 
       {/* Code Snippet */}

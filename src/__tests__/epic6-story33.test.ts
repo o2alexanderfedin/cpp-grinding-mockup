@@ -26,18 +26,18 @@ describe('Story #33: Copy to Clipboard Functionality', () => {
     // Mock clipboard API
     Object.assign(navigator, {
       clipboard: {
-        writeText: vi.fn(async (text: string) => Promise.resolve()),
+        writeText: vi.fn(async (_content: string) => Promise.resolve()),
       },
     })
   })
 
   describe('copyToClipboard function', () => {
     it('should copy text to clipboard successfully', async () => {
-      const text = 'test content'
-      const result = await copyToClipboard(text)
+      const testText = 'test content'
+      const result = await copyToClipboard(testText)
 
       expect(result).toBe(true)
-      expect(navigator.clipboard.writeText).toHaveBeenCalledWith(text)
+      expect(navigator.clipboard.writeText).toHaveBeenCalledWith(testText)
     })
 
     it('should return false when clipboard API fails', async () => {

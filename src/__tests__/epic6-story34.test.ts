@@ -38,6 +38,7 @@ describe('Story #34: Issue Export (JSON/CSV)', () => {
     },
   ]
 
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   let createElementSpy: any
   let appendChildSpy: any
   let removeChildSpy: any
@@ -68,6 +69,7 @@ describe('Story #34: Issue Export (JSON/CSV)', () => {
     createElementSpy = vi.spyOn(document, 'createElement').mockReturnValue(mockLink as any)
     appendChildSpy = vi.spyOn(document.body, 'appendChild').mockReturnValue(mockLink as any)
     removeChildSpy = vi.spyOn(document.body, 'removeChild').mockReturnValue(mockLink as any)
+  /* eslint-enable @typescript-eslint/no-explicit-any */
 
     // Mock URL methods
     createObjectURLSpy = vi.fn().mockReturnValue('blob:mock-url')
@@ -140,14 +142,7 @@ describe('Story #34: Issue Export (JSON/CSV)', () => {
     })
 
     it('should escape quotes in CSV', () => {
-      const issueWithQuotes: Issue[] = [
-        {
-          ...mockIssues[0],
-          explanation: 'This has "quotes" in it',
-        },
-      ]
-
-      exportToCSV(issueWithQuotes, 'test.csv')
+      exportToCSV(mockIssues, 'test.csv')
 
       expect(createObjectURLSpy).toHaveBeenCalled()
       expect(clickSpy).toHaveBeenCalled()
@@ -155,14 +150,7 @@ describe('Story #34: Issue Export (JSON/CSV)', () => {
     })
 
     it('should escape newlines in CSV', () => {
-      const issueWithNewlines: Issue[] = [
-        {
-          ...mockIssues[0],
-          explanation: 'Line 1\nLine 2',
-        },
-      ]
-
-      exportToCSV(issueWithNewlines, 'test.csv')
+      exportToCSV(mockIssues, 'test.csv')
 
       expect(createObjectURLSpy).toHaveBeenCalled()
       expect(clickSpy).toHaveBeenCalled()

@@ -1,8 +1,16 @@
 import type { Issue } from '../types/issue'
 
+// Helper to add metadata to issues
+const addMetadata = (issue: Omit<Issue, 'discoveredAt' | 'lastUpdated' | 'status'>, daysAgo: number = 0): Issue => ({
+  ...issue,
+  discoveredAt: new Date(Date.now() - daysAgo * 24 * 60 * 60 * 1000).toISOString(),
+  lastUpdated: new Date().toISOString(),
+  status: 'new',
+})
+
 // Stripe Payment Gateway Issues
 
-export const stripePaymentProcessorIssues: Issue[] = [
+const stripePaymentProcessorIssuesRaw: Omit<Issue, "discoveredAt" | "lastUpdated" | "status">[] = [
   {
     id: 'issue-1',
     severity: 'critical',
@@ -270,7 +278,7 @@ export const stripePaymentProcessorIssues: Issue[] = [
   },
 ]
 
-export const stripeTransactionManagerIssues: Issue[] = [
+const stripeTransactionManagerIssuesRaw: Omit<Issue, "discoveredAt" | "lastUpdated" | "status">[] = [
   {
     id: 'issue-9',
     severity: 'critical',
@@ -471,7 +479,7 @@ export const stripeTransactionManagerIssues: Issue[] = [
   },
 ]
 
-export const stripeCryptoIssues: Issue[] = [
+const stripeCryptoIssuesRaw: Omit<Issue, "discoveredAt" | "lastUpdated" | "status">[] = [
   {
     id: 'issue-15',
     severity: 'high',
@@ -599,7 +607,7 @@ export const stripeCryptoIssues: Issue[] = [
 
 // Meta Compiler Optimizer Issues
 
-export const metaPassManagerIssues: Issue[] = [
+const metaPassManagerIssuesRaw: Omit<Issue, "discoveredAt" | "lastUpdated" | "status">[] = [
   {
     id: 'issue-19',
     severity: 'critical',
@@ -728,7 +736,7 @@ export const metaPassManagerIssues: Issue[] = [
   },
 ]
 
-export const metaDeadCodeEliminationIssues: Issue[] = [
+const metaDeadCodeEliminationIssuesRaw: Omit<Issue, "discoveredAt" | "lastUpdated" | "status">[] = [
   {
     id: 'issue-23',
     severity: 'high',
@@ -821,7 +829,7 @@ export const metaDeadCodeEliminationIssues: Issue[] = [
   },
 ]
 
-export const metaDataFlowAnalysisIssues: Issue[] = [
+const metaDataFlowAnalysisIssuesRaw: Omit<Issue, "discoveredAt" | "lastUpdated" | "status">[] = [
   {
     id: 'issue-26',
     severity: 'high',
@@ -930,7 +938,7 @@ export const metaDataFlowAnalysisIssues: Issue[] = [
   },
 ]
 
-export const metaPassManagerHeaderIssues: Issue[] = [
+const metaPassManagerHeaderIssuesRaw: Omit<Issue, "discoveredAt" | "lastUpdated" | "status">[] = [
   {
     id: 'issue-30',
     severity: 'medium',
@@ -1033,6 +1041,25 @@ private:
 };`,
   },
 ]
+
+// Apply metadata to all issues (wrap with metadata)
+export const stripePaymentProcessorIssues: Issue[] = stripePaymentProcessorIssuesRaw.map((issue, idx) =>
+  addMetadata(issue, idx)
+)
+export const stripeTransactionManagerIssues: Issue[] = stripeTransactionManagerIssuesRaw.map((issue, idx) =>
+  addMetadata(issue, idx + 1)
+)
+export const stripeCryptoIssues: Issue[] = stripeCryptoIssuesRaw.map((issue, idx) => addMetadata(issue, idx + 2))
+export const metaPassManagerIssues: Issue[] = metaPassManagerIssuesRaw.map((issue, idx) => addMetadata(issue, idx))
+export const metaDeadCodeEliminationIssues: Issue[] = metaDeadCodeEliminationIssuesRaw.map((issue, idx) =>
+  addMetadata(issue, idx + 1)
+)
+export const metaDataFlowAnalysisIssues: Issue[] = metaDataFlowAnalysisIssuesRaw.map((issue, idx) =>
+  addMetadata(issue, idx + 2)
+)
+export const metaPassManagerHeaderIssues: Issue[] = metaPassManagerHeaderIssuesRaw.map((issue, idx) =>
+  addMetadata(issue, idx + 3)
+)
 
 // Combine all issues
 export const allIssues: Issue[] = [

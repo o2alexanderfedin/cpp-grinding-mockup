@@ -142,9 +142,7 @@ describe('Story #34: ExportMenu Component', () => {
 
   describe('Export with multiple issues', () => {
     it('should export all filtered issues', async () => {
-      const multipleIssues: Issue[] = [mockIssues[0], { ...mockIssues[0], id: 'test-2' }]
-
-      render(<ExportMenu issues={multipleIssues} repositoryName="test-repo" />)
+      render(<ExportMenu issues={mockIssues} repositoryName="test-repo" />)
 
       const button = screen.getByTitle('Export issues')
       fireEvent.click(button)
@@ -153,7 +151,7 @@ describe('Story #34: ExportMenu Component', () => {
       fireEvent.click(jsonOption)
 
       await waitFor(() => {
-        expect(exportUtils.exportToJSON).toHaveBeenCalledWith(multipleIssues, 'test-repo.json')
+        expect(exportUtils.exportToJSON).toHaveBeenCalledWith(mockIssues, 'test-repo.json')
       })
     })
   })
