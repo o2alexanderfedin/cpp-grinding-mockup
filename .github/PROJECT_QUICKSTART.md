@@ -23,7 +23,7 @@ gh issue create --title "Bug: Something broken" --body "Bug description" --label
 ### Add Issue to Project
 ```bash
 # Automatically adds with "Backlog" status
-gh issue create --title "..." --body "..." --project "OilField Development"
+gh issue create --title "..." --body "..." --project "C++ Grinding Mockup"
 
 # Or add existing issue
 gh project item-add 13 --owner o2alexanderfedin --url https://github.com/o2alexanderfedin/cpp-grinding-mockup/issues/ISSUE_NUMBER

@@ -11,7 +11,7 @@ This directory contains all configuration and documentation for the GitHub Proje
 ## What's Included
 
 ### Project Setup
-- **Project Name**: OilField Development
+- **Project Name**: C++ Grinding Mockup
 - **Project Number**: 13
 - **Custom Fields**: Priority, Effort, Sprint, Type
 - **Linked Repository**: cpp-grinding-mockup

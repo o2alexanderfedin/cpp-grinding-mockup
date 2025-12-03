@@ -1,7 +1,7 @@
-# GitHub Project Setup - OilField Development
+# GitHub Project Setup - C++ Grinding Mockup
 
 ## Project Information
-- **Project Name**: OilField Development
+- **Project Name**: C++ Grinding Mockup
 - **Project Number**: 13
 - **Project ID**: PVT_kwHOBJ7Qkc4BJsRa
 - **Project URL**: https://github.com/users/o2alexanderfedin/projects/13
