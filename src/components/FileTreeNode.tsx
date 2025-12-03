@@ -1,10 +1,19 @@
 import { type FC } from 'react'
-import { Box, Typography, IconButton } from '@mui/material'
+import { Box, Typography, IconButton, Chip, Tooltip } from '@mui/material'
 import FolderIcon from '@mui/icons-material/Folder'
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import type { FileNode } from '../types/repository'
+
+type SeverityColor = 'error' | 'warning' | 'info' | 'default'
+
+const getSeverityColor = (node: FileNode): SeverityColor => {
+  if (node.criticalIssues > 0) return 'error'
+  if (node.highIssues > 0) return 'warning'
+  if (node.mediumIssues > 0) return 'info'
+  return 'default'
+}
 
 export interface FileTreeNodeProps {
   node: FileNode
@@ -66,6 +75,21 @@ export const FileTreeNode: FC<FileTreeNodeProps> = ({
         <Typography variant="body2" sx={{ flexGrow: 1 }}>
           {node.name}
         </Typography>
+
+        {node.issueCount > 0 && (
+          <Tooltip
+            title={
+              <Box>
+                {node.criticalIssues > 0 && <div>Critical: {node.criticalIssues}</div>}
+                {node.highIssues > 0 && <div>High: {node.highIssues}</div>}
+                {node.mediumIssues > 0 && <div>Medium: {node.mediumIssues}</div>}
+                {node.lowIssues > 0 && <div>Low: {node.lowIssues}</div>}
+              </Box>
+            }
+          >
+            <Chip label={node.issueCount} size="small" color={getSeverityColor(node)} sx={{ ml: 1, minWidth: 32 }} />
+          </Tooltip>
+        )}
       </Box>
 
       {isDirectory && isExpanded && node.children && (
