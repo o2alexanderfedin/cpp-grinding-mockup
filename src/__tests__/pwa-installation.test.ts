@@ -17,10 +17,9 @@ describe('PWA Installation Verification', () => {
     })
 
     it('should include workbox script in dist', () => {
-      const workboxPath = join(distDir, 'workbox-58bd4dca.js')
-      // Workbox filename contains hash, so check pattern
-      const distFiles = existsSync(distDir)
-      expect(distFiles).toBe(true)
+      // Workbox filename contains hash, so we just verify dist exists
+      const distExists = existsSync(distDir)
+      expect(distExists).toBe(true)
     })
 
     it('should copy icons to dist/icons directory', () => {
@@ -37,6 +36,7 @@ describe('PWA Installation Verification', () => {
       const manifestPath = join(distDir, 'manifest.webmanifest')
 
       if (existsSync(manifestPath)) {
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
         const fs = require('fs')
         const manifestContent = fs.readFileSync(manifestPath, 'utf-8')
         const manifest = JSON.parse(manifestContent)

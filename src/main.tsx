@@ -15,6 +15,7 @@ const updateSW = registerSW({
   },
   onOfflineReady() {
     // App is ready to work offline
+    // eslint-disable-next-line no-console
     console.log('Hupyy is ready to work offline')
   }
 })
