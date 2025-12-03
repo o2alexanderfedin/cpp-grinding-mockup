@@ -10,23 +10,27 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['icons/**/*'],
       manifest: {
-        name: 'Hupyy C++ Formal Verification',
-        short_name: 'Hupyy Verifier',
-        description: 'AI Firewall for Code Verification',
-        start_url: '/',
-        display: 'standalone',
-        background_color: '#F5F5F7',
+        name: 'Hupyy - AI Firewall for Code Verification',
+        short_name: 'Hupyy',
+        description: 'Formal verification linter powered by AI that detects bugs before they reach production',
         theme_color: '#007AFF',
+        background_color: '#F5F5F7',
+        display: 'standalone',
+        orientation: 'portrait-primary',
+        scope: '/',
+        start_url: '/',
         icons: [
           {
             src: '/icons/icon-192x192.png',
             sizes: '192x192',
-            type: 'image/png'
+            type: 'image/png',
+            purpose: 'maskable any'
           },
           {
             src: '/icons/icon-512x512.png',
             sizes: '512x512',
-            type: 'image/png'
+            type: 'image/png',
+            purpose: 'maskable any'
           }
         ]
       },
