@@ -7,6 +7,7 @@ import type { IssueSeverity } from '../../types/issue'
 interface RepositoriesState {
   repositories: Repository[]
   selectedRepositoryId: string | null
+  selectedFilePath: string | null
   searchQuery: string
   languageFilter: string | null
   severityFilter: IssueSeverity | null
@@ -16,6 +17,7 @@ interface RepositoriesState {
 const initialState: RepositoriesState = {
   repositories: mockRepositories,
   selectedRepositoryId: null,
+  selectedFilePath: null,
   searchQuery: '',
   languageFilter: null,
   severityFilter: null,
@@ -28,6 +30,9 @@ const repositoriesSlice = createSlice({
   reducers: {
     selectRepository: (state, action: PayloadAction<string>) => {
       state.selectedRepositoryId = action.payload
+    },
+    selectFile: (state, action: PayloadAction<string>) => {
+      state.selectedFilePath = action.payload
     },
     loadRepositories: (state, action: PayloadAction<Repository[]>) => {
       state.repositories = action.payload
@@ -47,6 +52,7 @@ const repositoriesSlice = createSlice({
 // Actions
 export const {
   selectRepository,
+  selectFile,
   loadRepositories,
   setSearchQuery,
   setLanguageFilter,
@@ -63,6 +69,7 @@ export const selectSelectedRepository = (state: RootState) => {
   return state.repositories.repositories.find(repo => repo.id === id) ?? null
 }
 
+export const selectSelectedFilePath = (state: RootState) => state.repositories.selectedFilePath
 export const selectSearchQuery = (state: RootState) => state.repositories.searchQuery
 export const selectLanguageFilter = (state: RootState) => state.repositories.languageFilter
 export const selectSeverityFilter = (state: RootState) => state.repositories.severityFilter
