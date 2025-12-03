@@ -122,7 +122,7 @@ describe('Story #24: Issue Count Badges', () => {
       const mockOnToggle = vi.fn()
       const mockOnSelect = vi.fn()
 
-      const { container } = render(
+      render(
         <FileTreeNode
           node={fileNode}
           level={0}
