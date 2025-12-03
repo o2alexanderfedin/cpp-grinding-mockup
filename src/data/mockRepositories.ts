@@ -1,4 +1,13 @@
 import type { Repository } from '../types/repository'
+import {
+  stripePaymentProcessorIssues,
+  stripeTransactionManagerIssues,
+  stripeCryptoIssues,
+  metaPassManagerIssues,
+  metaDeadCodeEliminationIssues,
+  metaDataFlowAnalysisIssues,
+  metaPassManagerHeaderIssues,
+} from './mockIssues'
 
 export const mockRepositories: Repository[] = [
   {
@@ -116,17 +125,10 @@ export const mockRepositories: Repository[] = [
       },
     ],
     issues: [
-      'issue-1',
-      'issue-2',
-      'issue-3',
-      'issue-4',
-      'issue-5',
-      'issue-6',
-      'issue-7',
-      'issue-8',
-      'issue-9',
-      'issue-10',
-    ],
+      ...stripePaymentProcessorIssues,
+      ...stripeTransactionManagerIssues,
+      ...stripeCryptoIssues,
+    ].map(issue => issue.id),
   },
   {
     id: 'repo-2',
@@ -256,6 +258,11 @@ export const mockRepositories: Repository[] = [
         ],
       },
     ],
-    issues: ['issue-11', 'issue-12', 'issue-13', 'issue-14', 'issue-15'],
+    issues: [
+      ...metaPassManagerIssues,
+      ...metaDeadCodeEliminationIssues,
+      ...metaDataFlowAnalysisIssues,
+      ...metaPassManagerHeaderIssues,
+    ].map(issue => issue.id),
   },
 ]

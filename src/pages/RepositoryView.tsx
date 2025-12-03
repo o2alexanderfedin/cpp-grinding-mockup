@@ -1,13 +1,29 @@
 import { type FC } from 'react'
 import { useParams } from 'react-router-dom'
-import { Container, Typography, Grid, Paper } from '@mui/material'
+import { Container, Typography, Grid, Paper, Box, Button, Chip } from '@mui/material'
+import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import { useAppSelector, useAppDispatch } from '../app/hooks'
 import {
   selectAllRepositories,
   selectSelectedFilePath,
-  selectFile,
+  selectFile as selectFileInRepo,
 } from '../features/repositories/repositoriesSlice'
+import {
+  selectAnalysisStatus,
+  selectAnalysisProgress,
+  selectAnalysisStage,
+  selectFilteredIssues,
+  selectSelectedIssueId,
+  selectSelectedIssue,
+  selectFile,
+  selectIssue,
+  runAnalysis,
+} from '../features/analysis/analysisSlice'
 import { FileTree } from '../components/FileTree'
+import { IssueList } from '../components/IssueList'
+import { IssueDetail } from '../components/IssueDetail'
+import { IssueFilters } from '../components/IssueFilters'
+import { AnalysisProgress } from '../components/AnalysisProgress'
 
 export const RepositoryView: FC = () => {
   const { repoId } = useParams<{ repoId: string }>()
@@ -16,28 +32,76 @@ export const RepositoryView: FC = () => {
   const repositories = useAppSelector(selectAllRepositories)
   const repository = repositories.find(r => r.id === repoId)
   const selectedFilePath = useAppSelector(selectSelectedFilePath)
+  const analysisStatus = useAppSelector(selectAnalysisStatus)
+  const analysisProgress = useAppSelector(selectAnalysisProgress)
+  const analysisStage = useAppSelector(selectAnalysisStage)
+  const filteredIssues = useAppSelector(selectFilteredIssues)
+  const selectedIssueId = useAppSelector(selectSelectedIssueId)
+  const selectedIssue = useAppSelector(selectSelectedIssue)
 
   const handleSelectFile = (filePath: string) => {
+    dispatch(selectFileInRepo(filePath))
     dispatch(selectFile(filePath))
+  }
+
+  const handleAnalyze = () => {
+    if (repoId) {
+      dispatch(runAnalysis(repoId))
+    }
   }
 
   if (!repository) {
     return (
-      <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Container maxWidth="xl" sx={{ py: 4 }}>
         <Typography variant="h4">Repository not found</Typography>
       </Container>
     )
   }
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Typography variant="h4" sx={{ mb: 3 }}>
-        {repository.owner}/{repository.name}
-      </Typography>
+    <Container maxWidth="xl" sx={{ py: 4 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+        <Box>
+          <Typography variant="h4">
+            {repository.owner}/{repository.name}
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 1, mt: 1 }}>
+            <Chip label={`${repository.issueCount} issues`} color="primary" size="small" />
+            <Chip
+              label={`${repository.criticalIssues} critical`}
+              color="error"
+              size="small"
+              variant="outlined"
+            />
+            <Chip
+              label={`${repository.highIssues} high`}
+              color="warning"
+              size="small"
+              variant="outlined"
+            />
+          </Box>
+        </Box>
+
+        <Button
+          variant="contained"
+          startIcon={<PlayArrowIcon />}
+          onClick={handleAnalyze}
+          disabled={analysisStatus === 'analyzing'}
+        >
+          {analysisStatus === 'analyzing' ? 'Analyzing...' : 'Run Analysis'}
+        </Button>
+      </Box>
+
+      {analysisStatus === 'analyzing' && (
+        <Paper sx={{ mb: 3 }}>
+          <AnalysisProgress progress={analysisProgress} stage={analysisStage} />
+        </Paper>
+      )}
 
       <Grid container spacing={3}>
-        <Grid item xs={12} md={4}>
-          <Paper sx={{ p: 2 }}>
+        {/* File Tree Column */}
+        <Grid item xs={12} md={3}>
+          <Paper sx={{ p: 2, height: '70vh', overflow: 'auto' }}>
             <Typography variant="h6" sx={{ mb: 2 }}>
               File Tree
             </Typography>
@@ -52,12 +116,52 @@ export const RepositoryView: FC = () => {
           </Paper>
         </Grid>
 
-        <Grid item xs={12} md={8}>
-          <Paper sx={{ p: 2 }}>
-            <Typography variant="h6">Issues</Typography>
-            <Typography sx={{ mt: 2 }}>
-              {selectedFilePath ? `Issues for ${selectedFilePath}` : 'Select a file to view issues'}
+        {/* Issue List Column */}
+        <Grid item xs={12} md={4}>
+          <Paper sx={{ p: 2, height: '70vh', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+            <Typography variant="h6" sx={{ mb: 2 }}>
+              Issues
             </Typography>
+
+            {analysisStatus === 'complete' && selectedFilePath && (
+              <>
+                <IssueFilters />
+                <Box sx={{ overflow: 'auto', flexGrow: 1 }}>
+                  <IssueList
+                    issues={filteredIssues}
+                    selectedIssueId={selectedIssueId}
+                    onSelectIssue={id => dispatch(selectIssue(id))}
+                  />
+                </Box>
+              </>
+            )}
+
+            {analysisStatus !== 'complete' && (
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+                <Typography color="text.secondary">
+                  {analysisStatus === 'analyzing'
+                    ? 'Analysis in progress...'
+                    : 'Click "Run Analysis" to start'}
+                </Typography>
+              </Box>
+            )}
+          </Paper>
+        </Grid>
+
+        {/* Issue Detail Column */}
+        <Grid item xs={12} md={5}>
+          <Paper sx={{ p: 2, height: '70vh', overflow: 'hidden' }}>
+            <Typography variant="h6" sx={{ mb: 2 }}>
+              Issue Details
+            </Typography>
+
+            {selectedIssue ? (
+              <IssueDetail issue={selectedIssue} />
+            ) : (
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80%' }}>
+                <Typography color="text.secondary">Select an issue to view details</Typography>
+              </Box>
+            )}
           </Paper>
         </Grid>
       </Grid>
