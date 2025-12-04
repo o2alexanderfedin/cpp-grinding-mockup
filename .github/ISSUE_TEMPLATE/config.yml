@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Project Board
+    url: https://github.com/users/o2alexanderfedin/projects/13
+    about: View the project board with all issues organized in Kanban/Sprint views
+  - name: Documentation
+    url: https://github.com/o2alexanderfedin/cpp-grinding-mockup/blob/develop/.github/PROJECT_SETUP.md
+    about: Read the full GitHub Project setup documentation
+  - name: Quick Start Guide
+    url: https://github.com/o2alexanderfedin/cpp-grinding-mockup/blob/develop/.github/PROJECT_QUICKSTART.md
+    about: Quick reference for common project management tasks

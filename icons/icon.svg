@@ -1,0 +1,20 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="256" fill="#007AFF"/>
+
+  <!-- Shield outline with safe area for maskable icons (80% of canvas) -->
+  <g transform="translate(102.4, 102.4) scale(0.8)">
+    <!-- Shield background -->
+    <path d="M256 32L128 96C128 256 160 384 256 480C352 384 384 256 384 96L256 32Z"
+          fill="#FFFFFF"
+          fill-opacity="0.95"/>
+
+    <!-- Checkmark inside shield -->
+    <path d="M224 320L160 256L184 232L224 272L328 168L352 192L224 320Z"
+          fill="#007AFF"
+          stroke="#007AFF"
+          stroke-width="4"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+  </g>
+</svg>
