@@ -13,5 +13,16 @@
   <link rel="manifest" href="/cpp-grinding-mockup/manifest.webmanifest"></head>
   <body>
     <div id="root"></div>
+    <script>
+      // GitHub Pages SPA redirect handler
+      // Handles redirects from 404.html by restoring the original path
+      (function() {
+        const query = window.location.search;
+        if (query && query.startsWith('?p=')) {
+          const route = query.slice(3).replace(/~and~/g, '&');
+          window.history.replaceState(null, '', route);
+        }
+      })();
+    </script>
   </body>
 </html>
