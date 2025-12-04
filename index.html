@@ -13,16 +13,5 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script>
-      // GitHub Pages SPA redirect handler
-      // Handles redirects from 404.html by restoring the original path
-      (function() {
-        const query = window.location.search;
-        if (query && query.startsWith('?p=')) {
-          const route = query.slice(3).replace(/~and~/g, '&');
-          window.history.replaceState(null, '', route);
-        }
-      })();
-    </script>
   </body>
 </html>
