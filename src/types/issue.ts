@@ -2,6 +2,8 @@ export type IssueSeverity = 'critical' | 'high' | 'medium' | 'low'
 
 export type IssueCategory = 'memory-safety' | 'concurrency' | 'undefined-behavior' | 'type-safety'
 
+export type IssueStatus = 'open' | 'fixed' | 'dismissed' | 'acknowledged'
+
 export interface Issue {
   id: string
   severity: IssueSeverity
@@ -15,4 +17,5 @@ export interface Issue {
   simplifiedProof: string
   explanation: string
   suggestedFix: string
+  status?: IssueStatus // Optional for backward compatibility with mock data
 }

@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, createSelector, type PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '@app/store'
-import type { Issue, IssueSeverity } from '../../types/issue'
+import type { Issue, IssueSeverity, IssueStatus } from '../../types/issue'
 import { issueMap } from '../../data/mockIssues'
 
 type AnalysisStatus = 'idle' | 'analyzing' | 'complete' | 'error'
@@ -103,6 +103,36 @@ const analysisSlice = createSlice({
     toggleDrawer: state => {
       state.drawerOpen = !state.drawerOpen
     },
+    updateIssueStatus: (state, action: PayloadAction<{ issueId: string; status: IssueStatus }>) => {
+      const issue = state.issues.find(i => i.id === action.payload.issueId)
+      if (issue) {
+        issue.status = action.payload.status
+      }
+    },
+    applyFix: (state, action: PayloadAction<string>) => {
+      const issue = state.issues.find(i => i.id === action.payload)
+      if (issue) {
+        issue.status = 'fixed'
+      }
+    },
+    markAsFixed: (state, action: PayloadAction<string>) => {
+      const issue = state.issues.find(i => i.id === action.payload)
+      if (issue) {
+        issue.status = 'fixed'
+      }
+    },
+    dismissIssue: (state, action: PayloadAction<string>) => {
+      const issue = state.issues.find(i => i.id === action.payload)
+      if (issue) {
+        issue.status = 'dismissed'
+      }
+    },
+    acknowledgeIssue: (state, action: PayloadAction<string>) => {
+      const issue = state.issues.find(i => i.id === action.payload)
+      if (issue) {
+        issue.status = 'acknowledged'
+      }
+    },
   },
   extraReducers: builder => {
     builder
@@ -140,6 +170,11 @@ export const {
   openDrawer,
   closeDrawer,
   toggleDrawer,
+  updateIssueStatus,
+  applyFix,
+  markAsFixed,
+  dismissIssue,
+  acknowledgeIssue,
 } = analysisSlice.actions
 
 // Selectors

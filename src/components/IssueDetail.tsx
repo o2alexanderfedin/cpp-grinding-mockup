@@ -5,6 +5,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import type { Issue } from '../types/issue'
 import { ExportButton } from './ExportButton'
+import { IssueActions } from './IssueActions'
 
 interface IssueDetailProps {
   issue: Issue
@@ -149,6 +150,9 @@ export function IssueDetail({ issue }: IssueDetailProps) {
           {issue.suggestedFix}
         </SyntaxHighlighter>
       </Paper>
+
+      {/* Action Buttons */}
+      <IssueActions issue={issue} />
 
       {/* Export Button */}
       <ExportButton issue={issue} />

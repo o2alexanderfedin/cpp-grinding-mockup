@@ -1,4 +1,6 @@
 import { ListItem, ListItemText, Chip, Box, Typography } from '@mui/material'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import CloseIcon from '@mui/icons-material/Close'
 import type { Issue } from '../types/issue'
 
 interface IssueListItemProps {
@@ -40,6 +42,18 @@ export function IssueListItem({ issue, isSelected, onSelect }: IssueListItemProp
         primary={
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
             <Chip label={issue.severity} color={getSeverityColor(issue.severity)} size="small" />
+            {issue.status === 'fixed' && (
+              <Chip
+                label="Fixed"
+                color="success"
+                size="small"
+                icon={<CheckCircleIcon />}
+                sx={{ fontWeight: 500 }}
+              />
+            )}
+            {issue.status === 'dismissed' && (
+              <Chip label="Dismissed" size="small" icon={<CloseIcon />} sx={{ fontWeight: 500 }} />
+            )}
             <Typography variant="body1">{issue.title}</Typography>
           </Box>
         }
