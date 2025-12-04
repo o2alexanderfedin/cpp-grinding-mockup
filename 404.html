@@ -8,20 +8,20 @@
       // This handles client-side routing by redirecting 404s back to index.html
       // with the path encoded in the URL parameters
 
-      const pathSegmentsToKeep = 1; // Keep /cpp-grinding-mockup/
+      (function() {
+        const basePath = '/cpp-grinding-mockup/';
+        const fullPath = window.location.pathname;
 
-      const path = window.location.pathname
-        .split('/')
-        .slice(0, 1 + pathSegmentsToKeep)
-        .join('/') + '/';
+        // Extract the route by removing the base path
+        let route = fullPath;
+        if (fullPath.startsWith(basePath)) {
+          route = fullPath.substring(basePath.length - 1); // Keep the leading slash
+        }
 
-      const redirect = window.location.pathname.slice(path.length - 1);
-
-      const query = redirect
-        ? '?p=' + redirect.replace(/&/g, '~and~')
-        : '';
-
-      window.location.replace(path + query);
+        // Encode the route and redirect to index.html
+        const query = route ? '?p=' + route.replace(/&/g, '~and~') : '';
+        window.location.replace(basePath + query);
+      })();
     </script>
   </head>
   <body>
