@@ -11,7 +11,7 @@ export const App: FC = () => {
   return (
     <ThemeProvider theme={macosTheme}>
       <CssBaseline />
-      <BrowserRouter>
+      <BrowserRouter basename="/cpp-grinding-mockup">
         <Layout>
           <Routes>
             <Route path="/" element={<LandingPage />} />
