@@ -1,5 +1,5 @@
 import { type FC } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { HashRouter, Routes, Route } from 'react-router-dom'
 import { ThemeProvider, CssBaseline } from '@mui/material'
 import { macosTheme } from '@theme/macosTheme'
 import { Layout } from '@components/Layout'
@@ -11,7 +11,7 @@ export const App: FC = () => {
   return (
     <ThemeProvider theme={macosTheme}>
       <CssBaseline />
-      <BrowserRouter basename="/cpp-grinding-mockup">
+      <HashRouter>
         <Layout>
           <Routes>
             <Route path="/" element={<LandingPage />} />
@@ -19,7 +19,7 @@ export const App: FC = () => {
             <Route path="/repo/:repoId" element={<RepositoryView />} />
           </Routes>
         </Layout>
-      </BrowserRouter>
+      </HashRouter>
     </ThemeProvider>
   )
 }
