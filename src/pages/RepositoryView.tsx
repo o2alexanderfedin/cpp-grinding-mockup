@@ -153,15 +153,17 @@ export const RepositoryView: FC = () => {
 
         {/* Issue Detail Column */}
         <Grid item xs={12} md={5}>
-          <Paper sx={{ p: 2, height: '70vh', overflow: 'hidden' }}>
+          <Paper sx={{ p: 2, height: '70vh', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
             <Typography variant="h6" sx={{ mb: 2 }}>
               Issue Details
             </Typography>
 
             {selectedIssue ? (
-              <IssueDetail issue={selectedIssue} />
+              <Box sx={{ overflow: 'auto', flexGrow: 1 }}>
+                <IssueDetail issue={selectedIssue} />
+              </Box>
             ) : (
-              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80%' }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexGrow: 1 }}>
                 <Typography color="text.secondary">Select an issue to view details</Typography>
               </Box>
             )}

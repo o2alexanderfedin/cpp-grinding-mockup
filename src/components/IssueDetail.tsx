@@ -56,7 +56,7 @@ export function IssueDetail({ issue }: IssueDetailProps) {
   }
 
   return (
-    <Box sx={{ height: '100%', overflow: 'auto' }}>
+    <Box>
       {/* Header */}
       <Box sx={{ mb: 3 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1, flexWrap: 'wrap' }}>
