@@ -24,6 +24,7 @@ import { IssueList } from '../components/IssueList'
 import { IssueDetail } from '../components/IssueDetail'
 import { IssueFilters } from '../components/IssueFilters'
 import { AnalysisProgress } from '../components/AnalysisProgress'
+import { PageNavigation } from '../components/PageNavigation'
 
 export const RepositoryView: FC = () => {
   const { repoId } = useParams<{ repoId: string }>()
@@ -60,6 +61,8 @@ export const RepositoryView: FC = () => {
 
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
+      <PageNavigation />
+
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Box>
           <Typography variant="h4">
