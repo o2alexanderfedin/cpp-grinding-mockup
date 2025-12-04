@@ -4,6 +4,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 import path from 'path'
 
 export default defineConfig({
+  base: '/cpp-grinding-mockup/',
   plugins: [
     react(),
     VitePWA({
@@ -17,8 +18,8 @@ export default defineConfig({
         background_color: '#F5F5F7',
         display: 'standalone',
         orientation: 'portrait-primary',
-        scope: '/',
-        start_url: '/',
+        scope: '/cpp-grinding-mockup/',
+        start_url: '/cpp-grinding-mockup/',
         icons: [
           {
             src: '/icons/icon-192x192.png',
