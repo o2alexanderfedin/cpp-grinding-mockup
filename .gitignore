@@ -33,3 +33,4 @@ sw.js.map
 workbox-*.js
 workbox-*.js.map
 TO-DOS.md
+.playwright-mcp/
