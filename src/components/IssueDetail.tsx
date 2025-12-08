@@ -1,8 +1,11 @@
 import { useState } from 'react'
-import { Box, Paper, Typography, Chip, Button } from '@mui/material'
+import { Box, Paper, Typography, Chip, Button, IconButton, Snackbar, Alert } from '@mui/material'
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import type { Issue } from '../types/issue'
+import { ExportButton } from './ExportButton'
+import { IssueActions } from './IssueActions'
 
 interface IssueDetailProps {
   issue: Issue
@@ -10,6 +13,7 @@ interface IssueDetailProps {
 
 export function IssueDetail({ issue }: IssueDetailProps) {
   const [showSimplified, setShowSimplified] = useState(true)
+  const [showCopySuccess, setShowCopySuccess] = useState(false)
 
   const getSeverityColor = (
     severity: Issue['severity']
@@ -39,8 +43,21 @@ export function IssueDetail({ issue }: IssueDetailProps) {
     }
   }
 
+  const handleCopyFix = async (): Promise<void> => {
+    try {
+      await navigator.clipboard.writeText(issue.suggestedFix)
+      setShowCopySuccess(true)
+    } catch (err) {
+      console.error('Failed to copy to clipboard:', err)
+    }
+  }
+
+  const handleCloseSnackbar = (): void => {
+    setShowCopySuccess(false)
+  }
+
   return (
-    <Box sx={{ height: '100%', overflow: 'auto' }}>
+    <Box>
       {/* Header */}
       <Box sx={{ mb: 3 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1, flexWrap: 'wrap' }}>
@@ -113,10 +130,13 @@ export function IssueDetail({ issue }: IssueDetailProps) {
       </Paper>
 
       {/* Suggested Fix */}
-      <Paper sx={{ p: 2, bgcolor: '#e8f5e9' }}>
-        <Typography variant="subtitle2" sx={{ mb: 1 }}>
-          Suggested Fix
-        </Typography>
+      <Paper sx={{ p: 2, bgcolor: '#e8f5e9', mb: 3 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+          <Typography variant="subtitle2">Suggested Fix</Typography>
+          <IconButton onClick={handleCopyFix} size="small" title="Copy fix to clipboard">
+            <ContentCopyIcon fontSize="small" />
+          </IconButton>
+        </Box>
         <SyntaxHighlighter
           language="cpp"
           style={vs}
@@ -130,6 +150,24 @@ export function IssueDetail({ issue }: IssueDetailProps) {
           {issue.suggestedFix}
         </SyntaxHighlighter>
       </Paper>
+
+      {/* Action Buttons */}
+      <IssueActions issue={issue} />
+
+      {/* Export Button */}
+      <ExportButton issue={issue} />
+
+      {/* Success Snackbar */}
+      <Snackbar
+        open={showCopySuccess}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+          Fixed code copied to clipboard!
+        </Alert>
+      </Snackbar>
     </Box>
   )
 }

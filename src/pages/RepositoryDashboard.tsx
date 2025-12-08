@@ -11,6 +11,7 @@ import {
 } from '../features/repositories/repositoriesSlice'
 import { RepositoryGrid } from '../components/RepositoryGrid'
 import { SearchBar } from '../components/SearchBar'
+import { PageNavigation } from '../components/PageNavigation'
 
 export const RepositoryDashboard: FC = () => {
   const dispatch = useAppDispatch()
@@ -27,6 +28,8 @@ export const RepositoryDashboard: FC = () => {
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
+      <PageNavigation showBack={false} />
+
       <Typography variant="h4" sx={{ mb: 4 }}>
         Your Repositories
       </Typography>

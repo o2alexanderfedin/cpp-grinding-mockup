@@ -24,6 +24,7 @@ import { IssueList } from '../components/IssueList'
 import { IssueDetail } from '../components/IssueDetail'
 import { IssueFilters } from '../components/IssueFilters'
 import { AnalysisProgress } from '../components/AnalysisProgress'
+import { PageNavigation } from '../components/PageNavigation'
 
 export const RepositoryView: FC = () => {
   const { repoId } = useParams<{ repoId: string }>()
@@ -60,6 +61,8 @@ export const RepositoryView: FC = () => {
 
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
+      <PageNavigation />
+
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Box>
           <Typography variant="h4">
@@ -150,15 +153,17 @@ export const RepositoryView: FC = () => {
 
         {/* Issue Detail Column */}
         <Grid item xs={12} md={5}>
-          <Paper sx={{ p: 2, height: '70vh', overflow: 'hidden' }}>
+          <Paper sx={{ p: 2, height: '70vh', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
             <Typography variant="h6" sx={{ mb: 2 }}>
               Issue Details
             </Typography>
 
             {selectedIssue ? (
-              <IssueDetail issue={selectedIssue} />
+              <Box sx={{ overflow: 'auto', flexGrow: 1 }}>
+                <IssueDetail issue={selectedIssue} />
+              </Box>
             ) : (
-              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80%' }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexGrow: 1 }}>
                 <Typography color="text.secondary">Select an issue to view details</Typography>
               </Box>
             )}
